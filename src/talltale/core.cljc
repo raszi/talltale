@@ -1,5 +1,4 @@
 (ns talltale.core
-  #?(:cljs (:refer-clojure :exclude [name type]))
   (:require
    [clojure.string :as str :refer [lower-case upper-case]]
    [clojure.pprint :refer [cl-format]]
