@@ -128,7 +128,7 @@
   [spec]
   (apply str (map (fn [c]
                     (cond (#{\0 \1 \2 \3 \4 \5 \6 \7 \8 \9} c) (random-digit)
-                          :else (random-letter) )) spec)))
+                          :else (random-letter))) spec)))
 
 (defn first-name
   ([] (first-name :en))
@@ -159,14 +159,14 @@
 (defn date-of-birth
   ([] (date-of-birth (age)))
   ([age]
-   #?(:clj (.minusYears (LocalDate/now) age) )
+   #?(:clj (.minusYears (LocalDate/now) age))
    #?(:cljs (time-coerce/to-date (time/minus (time/today) (time/years age))))))
 
 (defn date-of-birth-gen [age]
   (gen/return (date-of-birth age)))
 
 (defn- identifier [first-name last-name]
-  (let [lower-fn (str/replace (str/lower-case first-name) " " "" )
+  (let [lower-fn (str/replace (str/lower-case first-name) " " "")
         lower-ln (str/replace (str/lower-case last-name) " " "")
         generators {:initial-last-name (fn [] (str (subs lower-fn 0 1) lower-ln))
                     :first-dot-last (fn [] (str lower-fn "." lower-ln))
