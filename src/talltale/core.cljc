@@ -1,7 +1,6 @@
 (ns talltale.core
   #?(:cljs (:refer-clojure :exclude [name type]))
   (:require
-   [clojure.core :refer [name type] :rename {name core-name type core-type}]
    [clojure.string :as str :refer [lower-case upper-case]]
    [clojure.pprint :refer [cl-format]]
    [clojure.test.check.generators :as check-gen]
@@ -393,19 +392,19 @@
   ([] (company-gen :en))
   ([locale]
    (check-gen/let [company-name (company-name-gen)
-                   company-id (company-id-gen name)
+                   company-id (company-id-gen company-name)
                    company-type (company-type-gen)
                    identification-number (identification-number-gen locale)
-                   full-name (full-name-gen name type)
+                   full-name (full-name-gen company-name company-type)
                    tld (tld-gen)
-                   domain (domain-gen name tld)
+                   domain (domain-gen company-name tld)
                    url (url-gen domain)
-                   logo-url (logo-url-gen name)
+                   logo-url (logo-url-gen company-name)
                    email (company-email-gen locale domain)
                    phone-number (phone-number-gen locale)
                    address (address-gen locale)
                    updated-by (username-gen)]
-     (create-map company-name company-id company-type identification-number full-name tld domain url logo-url email phone-number address))))
+     (create-map company-name company-id company-type identification-number full-name tld domain url logo-url email phone-number address updated-by))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                              ;;
